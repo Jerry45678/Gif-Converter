@@ -20,4 +20,4 @@ GIF轉換器，可以將多張png檔案轉成GIF動畫，右方設定欄可以�
 
 5.輸出結果如下：
 
-![image](https://github.com/Jerry45678/Gif-Converter/blob/main/Step/test.png)
+![image](https://github.com/Jerry45678/Gif-Converter/blob/main/Step/test.gif)
