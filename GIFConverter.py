@@ -54,7 +54,7 @@ def converter():
         images.append(imageio.imread(item))
     ##輸出 duration=間隔 loop=輪迴次數 Loop是50行那邊給的值
     imageio.mimsave(Entry1.get() + '.gif', images, 'GIF',duration = Spinbox1.get(), loop = Loop)
-    ##把檔案移動到指定目錄
+    ##把檔案移動到指定目錄 如果老師問為什麼不直接匯出到目標就好 因為我不會
     if(Listbox1.get(0) != ""):
         #原位
         src = str.replace(os.path.abspath(os.getcwd()),"/","\\") + "\\" + Entry1.get() + '.gif'
