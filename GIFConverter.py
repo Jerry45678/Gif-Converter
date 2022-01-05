@@ -1,11 +1,10 @@
 import sys
 from tkinter import StringVar, filedialog, messagebox
-from tkinter.constants import FIRST
 from tkinter.filedialog import askdirectory
 import os
 import imageio
 
-
+##依照版本匯入Tkinter
 try:
     import Tkinter as tk
 except ImportError:
@@ -18,10 +17,14 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 
+#圖片檔列表 內容會是路徑文字
 filez = []
 
+#匯入按鈕功能
 def open_file():
+    #叫出開檔案視窗
     files = filedialog.askopenfilenames(parent=root,filetypes = (("png files","*.png"),("all files","*.*")))
+    #把開啟的圖片路徑匯入上面那個列表
     for file in files:
         filez.append(file)
         Textbox.insert(tk.END, os.path.basename(str(file)))
@@ -31,35 +34,43 @@ def delete_all():
     filez = []
 
 def select_path():
+    #叫出選路徑視窗
     file_path = filedialog.askdirectory()
+    #Listbox1是路徑按鈕前面那一個文字輸入區塊 先把顯示的文字刪掉 避免像是選錯位子在按第二次按鈕 所以先把內容清空
     Listbox1.delete(0,tk.END)
+    #加入新路徑
     Listbox1.insert(1, str(file_path))
 
 def converter():
     if(filez == [] or Entry1.get() == ""):
         tk.messagebox.showinfo(title="警告", message="找不到檔案或未輸入名稱")
         return
+    #輪迴次數 0是無限次 但選單內我用文字無限不是數字0 所以要先把無限兩字換成0
     if(TCombobox1.get() == "無限"): Loop = 0
     else: Loop = TCombobox1.get()
+    #把檔案轉乘GIF
     images = []
     for item in filez:
         images.append(imageio.imread(item))
-    ##輸出
+    ##輸出 duration=間隔 loop=輪迴次數 Loop是50行那邊給的值
     imageio.mimsave(Entry1.get() + '.gif', images, 'GIF',duration = Spinbox1.get(), loop = Loop)
     ##把檔案移動到指定目錄
     if(Listbox1.get(0) != ""):
+        #原位
         src = str.replace(os.path.abspath(os.getcwd()),"/","\\") + "\\" + Entry1.get() + '.gif'
+        #目的
         des = str.replace(Listbox1.get(0),"/","\\") + "\\"  + Entry1.get() + '.gif'
+        #傳送
         os.rename(src,des)
     tk.messagebox.showinfo(title="通知", message="成功輸出檔案")
 
 
 root = tk.Tk()
 
+
+#介面 我直接用PAGE製作在複製過來
 root.geometry("312x253")
-root.minsize(120, 1)
-root.maxsize(1924, 1061)
-root.resizable(1,  1)
+root.resizable(0, 0)
 root.title("GIF轉換器")
 root.configure(background="#d9d9d9")
 root.configure(highlightbackground="#d9d9d9")
